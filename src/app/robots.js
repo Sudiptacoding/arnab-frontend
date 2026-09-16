@@ -5,6 +5,7 @@ export default function robots() {
       allow: "/",
       disallow: ["/admin/", "/api/"],
     },
-    sitemap: "https://arnab.vercel.app/sitemap.xml",
+
+    sitemap: "https://retouchlab360.vercel.app/sitemap.xml",
   };
 }

@@ -1,7 +1,7 @@
 export default function sitemap() {
   return [
     {
-      url: "https://arnab.vercel.app",
+      url: "https://retouchlab360.vercel.app",
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
