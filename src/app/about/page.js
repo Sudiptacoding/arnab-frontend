@@ -216,6 +216,14 @@ export default function AdminAboutPage() {
             </p>
           </div>
           <button
+        onClick={() => {
+          window.location.href = "/admin";
+        }}
+            className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-amber-500/20 transition duration-300 disabled:opacity-50 cursor-pointer"
+          >
+            Go to Admin Home
+          </button>
+          <button
             onClick={handleSubmit}
             disabled={saving}
             className="flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black font-bold px-6 py-3 rounded-xl shadow-lg hover:shadow-amber-500/20 transition duration-300 disabled:opacity-50 cursor-pointer"
