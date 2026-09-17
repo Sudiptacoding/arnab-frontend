@@ -15,7 +15,7 @@ export default function Works() {
   const { data: works = [], isLoading, isError } = useQuery({
     queryKey: ['works', activeCategory],
     queryFn: async () => {
-      const res = await axios.get(`https://arnab-backend.vercel.app/api/works?category=${activeCategory}`);
+      const res = await axios.get(`http://localhost:5000/api/works?category=${activeCategory}`);
       return res.data;
     }
   });

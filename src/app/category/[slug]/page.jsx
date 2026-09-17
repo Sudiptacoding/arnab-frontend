@@ -25,7 +25,7 @@ export default function CategoryPage() {
   } = useQuery({
     queryKey: ["category-items", slug],
     queryFn: async () => {
-      const res = await axios.get(`https://arnab-backend.vercel.app/api/category?category=${slug}`);
+      const res = await axios.get(`http://localhost:5000/api/category?category=${slug}`);
       return res.data;
     },
   });

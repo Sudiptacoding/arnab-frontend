@@ -11,7 +11,7 @@ import {
   RightOutlined,
 } from "@ant-design/icons";
 
-const API_URL = "https://arnab-backend.vercel.app";
+const API_URL = "http://localhost:5000";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);

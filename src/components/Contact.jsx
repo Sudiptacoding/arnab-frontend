@@ -1,8 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Phone, Mail, MapPin, Send } from "lucide-react";
-import { FaGithub, FaDiscord, FaTwitter, FaYoutube } from "react-icons/fa";
+import { FaGithub, FaDiscord, FaTwitter, FaYoutube, FaFacebook, FaLinkedin, FaEnvelope, FaWhatsapp } from "react-icons/fa";
 
 export default function ContactSection() {
   const [formData, setFormData] = useState({
@@ -24,7 +24,7 @@ export default function ContactSection() {
     setStatus({ type: "", msg: "" });
 
     try {
-      const res = await axios.post("https://arnab-backend.vercel.app/api/contact", formData);
+      const res = await axios.post("http://localhost:5000/api/contact", formData);
       setStatus({ type: "success", msg: res.data.message || "Message sent successfully!" });
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (err) {
@@ -36,6 +36,30 @@ export default function ContactSection() {
       setLoading(false);
     }
   };
+
+  // Dynamic Icon Map
+const ICON_MAP = {
+  github: { icon: <FaGithub size={18} />, defaultBg: "#3e4856" },
+  discord: { icon: <FaDiscord size={18} />, defaultBg: "#00b0f4" },
+  twitter: { icon: <FaTwitter size={18} />, defaultBg: "#1da1f2" },
+  youtube: { icon: <FaYoutube size={18} />, defaultBg: "#ff0000" },
+  facebook: { icon: <FaFacebook size={18} />, defaultBg: "#1877f2" },
+  linkedin: { icon: <FaLinkedin size={18} />, defaultBg: "#0a66c2" },
+  email: { icon: <FaEnvelope size={18} />, defaultBg: "#ea4335" },
+  whatsapp: { icon: <FaWhatsapp size={18} />, defaultBg: "#25d366" },
+};
+
+// ... আপনার ContactSection Component এর ভেতরে ...
+const [socials, setSocials] = useState([]);
+
+useEffect(() => {
+  axios.get("http://localhost:5000/api/socials")
+    .then((res) => setSocials(res.data))
+    .catch((err) => console.error(err));
+}, []);
+
+
+
 
   return (
     <section className="w-full bg-white font-sans text-gray-800">
@@ -81,25 +105,29 @@ export default function ContactSection() {
               </div>
               <div className="flex items-center gap-4">
                 <MapPin className="w-5 h-5 text-gray-800 flex-shrink-0" />
-                <span>Daulatpur, Khulna 9202, Bangladesh</span>
+                <span>Satkhira 9400, Khulna, Bangladesh</span>
               </div>
             </div>
 
             {/* Social Icons */}
-            <div className="flex items-center gap-3 pt-2">
-              <a href="#" className="w-10 h-10 rounded-full bg-[#3e4856] text-white flex items-center justify-center hover:opacity-90 transition">
-                <FaGithub size={18} />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-[#00b0f4] text-white flex items-center justify-center hover:opacity-90 transition">
-                <FaDiscord size={18} />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-[#1da1f2] text-white flex items-center justify-center hover:opacity-90 transition">
-                <FaTwitter size={18} />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-[#ff0000] text-white flex items-center justify-center hover:opacity-90 transition">
-                <FaYoutube size={18} />
-              </a>
-            </div>
+
+<div className="flex items-center gap-3 pt-2">
+  {socials.map((item) => {
+    const config = ICON_MAP[item.platform.toLowerCase()] || { icon: <FaGithub size={18} />, defaultBg: "#3e4856" };
+    return (
+      <a
+        key={item._id}
+        href={item.platform === "email" ? `mailto:${item.url}` : item.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ backgroundColor: item.bgColor || config.defaultBg }}
+        className="w-10 h-10 rounded-full text-white flex items-center justify-center hover:opacity-90 transition"
+      >
+        {config.icon}
+      </a>
+    );
+  })}
+</div>
           </div>
 
           {/* Right Column: Contact Form */}

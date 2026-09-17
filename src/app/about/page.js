@@ -109,7 +109,7 @@ export default function AdminAboutPage() {
   const fetchAboutData = async () => {
     try {
       setLoading(true);
-      const res = await fetch("https://arnab-backend.vercel.app/api/about");
+      const res = await fetch("http://localhost:5000/api/about");
       if (res.ok) {
         const data = await res.json();
         setFormData((prev) => ({ ...prev, ...data }));
@@ -174,7 +174,7 @@ export default function AdminAboutPage() {
     setStatusMessage("");
 
     try {
-      const res = await fetch("https://arnab-backend.vercel.app/api/about", {
+      const res = await fetch("http://localhost:5000/api/about", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

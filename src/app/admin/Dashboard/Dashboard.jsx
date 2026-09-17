@@ -5,7 +5,7 @@ import axios from "axios";
 import { uploadToImgBB } from './../../../utils/uploadImage';
 
 
-const API_URL = "https://arnab-backend.vercel.app";
+const API_URL = "http://localhost:5000";
 
 const emptyForm = {
   category: "",
@@ -423,6 +423,14 @@ function Dashboard({ onLogout }) {
         className="px-5 py-2 font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600"
       >
         About Section Manage
+      </button>
+      <button
+        onClick={() => {
+          window.location.href = "/socialicon";
+        }}
+        className="px-5 py-2 font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+      >
+        Icon Manage
       </button>
 
       {/* Logout */}
