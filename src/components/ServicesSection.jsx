@@ -9,7 +9,7 @@ export default function ServicesSection() {
   const { data: services = [], isLoading } = useQuery({
     queryKey: ["home-services"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/api/services");
+      const res = await axios.get("https://arnab-backend.vercel.app/api/services");
       return res.data.filter((item) => item.isFeatured === true);
     },
   });

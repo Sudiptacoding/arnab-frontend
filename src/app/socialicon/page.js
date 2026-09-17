@@ -22,7 +22,7 @@ export default function SocialAdminManager() {
 
   // Read
   const fetchSocials = async () => {
-    const res = await axios.get("http://localhost:5000/api/socials");
+    const res = await axios.get("https://arnab-backend.vercel.app/api/socials");
     setSocials(res.data);
   };
 
@@ -42,10 +42,10 @@ export default function SocialAdminManager() {
     };
 
     if (editingId) {
-      await axios.put(`http://localhost:5000/api/socials/${editingId}`, payload);
+      await axios.put(`https://arnab-backend.vercel.app/api/socials/${editingId}`, payload);
       setEditingId(null);
     } else {
-      await axios.post("http://localhost:5000/api/socials", payload);
+      await axios.post("https://arnab-backend.vercel.app/api/socials", payload);
     }
 
     setSelectedPlatform("");
@@ -63,7 +63,7 @@ export default function SocialAdminManager() {
   // Delete
   const handleDelete = async (id) => {
     if (confirm("Are you sure you want to delete?")) {
-      await axios.delete(`http://localhost:5000/api/socials/${id}`);
+      await axios.delete(`https://arnab-backend.vercel.app/api/socials/${id}`);
       fetchSocials();
     }
   };

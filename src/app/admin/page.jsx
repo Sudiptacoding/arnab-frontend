@@ -22,7 +22,7 @@ export default function AdminLogin() {
   const requestLogin = async () => {
     console.log("text")
     try {
-      const res = await axios.post("http://localhost:5000/admin/request-login", { email });
+      const res = await axios.post("https://arnab-backend.vercel.app/admin/request-login", { email });
       console.log(res)
       setMessage(res.data.message);
       setOtpSent(true);
@@ -33,7 +33,7 @@ export default function AdminLogin() {
 
   const verifyOtp = async () => {
     try {
-      const res = await axios.post("http://localhost:5000/admin/verify-otp", { email, otp });
+      const res = await axios.post("https://arnab-backend.vercel.app/admin/verify-otp", { email, otp });
       console.log(res.data);
       
       // ✅ লগইন সফল হলে localStorage-এ সেভ করুন

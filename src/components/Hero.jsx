@@ -26,7 +26,7 @@
 //   const { data: services = [], isLoading, isError } = useQuery({
 //     queryKey: ['hero-all-services'],
 //     queryFn: async () => {
-//       const res = await axios.get("http://localhost:5000/api/header");
+//       const res = await axios.get("https://arnab-backend.vercel.app/api/header");
 //       return res.data; // API-র সব ডাটা সরাসরি রিটার্ন করছে
 //     }
 //   });
@@ -265,7 +265,7 @@ export default function Hero() {
   const { data: services = [], isLoading, isError } = useQuery({
     queryKey: ['hero-all-services'],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:5000/api/header");
+      const res = await axios.get("https://arnab-backend.vercel.app/api/header");
       return res.data;
     }
   });

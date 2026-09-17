@@ -5,7 +5,7 @@ import axios from "axios";
 import { uploadToImgBB } from './../../../utils/uploadImage';
 
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://arnab-backend.vercel.app";
 
 const emptyForm = {
   category: "",

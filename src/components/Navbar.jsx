@@ -11,7 +11,7 @@ import {
   RightOutlined,
 } from "@ant-design/icons";
 
-const API_URL = "http://localhost:5000";
+const API_URL = "https://arnab-backend.vercel.app";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -92,15 +92,15 @@ export default function Navbar() {
           className="flex items-center gap-2 cursor-pointer"
         >
           <div className="bg-amber-500 text-white font-extrabold px-2 py-1 rounded text-xl">
-            Fix
+            360
           </div>
 
           <div className="flex flex-col leading-none">
             <span className="text-xl font-black text-black tracking-wider">
-              Best choice
+              Best Choice
             </span>
             <span className="text-[10px] text-gray-500 font-semibold tracking-widest">
-             PHOTOSHOP SINCE 2018
+             SINCE 2018
             </span>
           </div>
         </Link>

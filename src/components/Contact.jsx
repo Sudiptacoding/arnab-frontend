@@ -24,7 +24,7 @@ export default function ContactSection() {
     setStatus({ type: "", msg: "" });
 
     try {
-      const res = await axios.post("http://localhost:5000/api/contact", formData);
+      const res = await axios.post("https://arnab-backend.vercel.app/api/contact", formData);
       setStatus({ type: "success", msg: res.data.message || "Message sent successfully!" });
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch (err) {
@@ -53,7 +53,7 @@ const ICON_MAP = {
 const [socials, setSocials] = useState([]);
 
 useEffect(() => {
-  axios.get("http://localhost:5000/api/socials")
+  axios.get("https://arnab-backend.vercel.app/api/socials")
     .then((res) => setSocials(res.data))
     .catch((err) => console.error(err));
 }, []);
@@ -97,7 +97,7 @@ useEffect(() => {
             <div className="space-y-5 text-gray-700 font-medium text-sm">
               <div className="flex items-center gap-4">
                 <Phone className="w-5 h-5 text-gray-800" />
-                <span>+8801757385505</span>
+                <span>+8801613140291</span>
               </div>
               <div className="flex items-center gap-4">
                 <Mail className="w-5 h-5 text-gray-800" />
