@@ -10,6 +10,7 @@ import {
   UserOutlined,
   RightOutlined,
 } from "@ant-design/icons";
+import Image from "next/image";
 
 const API_URL = "https://arnab-backend.vercel.app";
 
@@ -91,9 +92,22 @@ export default function Navbar() {
           onClick={(e) => handleScrollTo(e, "top")}
           className="flex items-center gap-2 cursor-pointer"
         >
-          <div className="bg-amber-500 text-white font-extrabold px-2 py-1 rounded text-xl">
+          {/* <div className="bg-amber-500 text-white font-extrabold px-2 py-1 rounded text-xl">
             360
-          </div>
+          </div> */}
+
+
+
+
+<div className=" text-white font-extrabold p-1 rounded flex items-center justify-center">
+  <Image
+    src="/images/logos/newlogo (2).jpg"
+    alt="Logo"
+    width={40}
+    height={28}
+    className="h-10 w-auto object-contain rounded"
+  />
+</div>
 
           <div className="flex flex-col leading-none">
             <span className="text-xl font-black text-black tracking-wider">
@@ -106,7 +120,7 @@ export default function Navbar() {
         </Link>
 
         {/* ================= DESKTOP MENU ================= */}
-        <nav className="hidden lg:flex items-center gap-8 text-gray-700 font-medium">
+        <nav className="hidden xl:flex items-center gap-8 text-gray-700 font-medium">
 
           <a
             href="#top"
@@ -212,7 +226,7 @@ export default function Navbar() {
         </nav>
 
         {/* ================= ACTION BUTTONS ================= */}
-<div className="hidden lg:flex items-center gap-3">
+<div className="hidden xl:flex items-center gap-3">
   {/* "Get a Quote" (11 chars) -> "Free Sample" (11 chars) */}
   <Button
     size="large"
@@ -238,7 +252,7 @@ export default function Navbar() {
 
         {/* ================= MOBILE MENU TRIGGER ================= */}
         <button
-          className="lg:hidden text-2xl text-gray-700"
+          className="xl:hidden text-2xl text-gray-700"
           onClick={() => setOpen(true)}
         >
           <MenuOutlined />

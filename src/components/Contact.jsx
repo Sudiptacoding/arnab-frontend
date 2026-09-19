@@ -53,11 +53,26 @@ const ICON_MAP = {
 const [socials, setSocials] = useState([]);
 
 useEffect(() => {
-  axios.get("https://arnab-backend.vercel.app/api/socials")
-    .then((res) => setSocials(res.data))
-    .catch((err) => console.error(err));
-}, []);
+  let isMounted = true;
 
+  const fetchSocials = async (retries = 3) => {
+    try {
+      const res = await axios.get("https://arnab-backend.vercel.app/api/socials");
+      if (isMounted) setSocials(res.data || []);
+    } catch (err) {
+      if (retries > 0) {
+        setTimeout(() => fetchSocials(retries - 1), 1000);
+      } else {
+        console.error("Socials endpoint failed:", err);
+        if (isMounted) setSocials([]);
+      }
+    }
+  };
+
+  fetchSocials();
+
+  return () => { isMounted = false; };
+}, []);
 
 
 

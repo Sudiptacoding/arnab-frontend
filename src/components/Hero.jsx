@@ -240,88 +240,242 @@
 // }
 
 
+// "use client";
+// import React, { useRef, useState } from "react";
+// import Link from "next/link";
+// import { useQuery } from "@tanstack/react-query";
+// import axios from "axios";
+// import { Swiper, SwiperSlide } from "swiper/react";
+// import { Autoplay, Navigation } from "swiper/modules";
+// import { Spin } from "antd";
+// import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+// import { motion } from "framer-motion";
+
+// // Swiper CSS Styles
+// import "swiper/css";
+// import "swiper/css/navigation";
+// import Image from "next/image";
+
+// export default function Hero() {
+//   const [currentIndex, setCurrentIndex] = useState(1);
+//   const prevRef = useRef(null);
+//   const nextRef = useRef(null);
+
+//   // API থেকে ডাটা লোড
+//   const { data: services = [], isLoading, isError } = useQuery({
+//     queryKey: ['hero-all-services'],
+//     queryFn: async () => {
+//       const res = await axios.get("https://arnab-backend.vercel.app/api/header");
+//       return res.data;
+//     }
+//   });
+
+//   if (isLoading) {
+//     return (
+//       <div className="h-[450px] w-full flex items-center justify-center bg-gray-950">
+//         <Spin size="large" />
+//       </div>
+//     );
+//   }
+
+//   if (isError || services.length === 0) {
+//     return (
+//       <div className="h-[450px] w-full flex items-center justify-center text-red-500 font-medium bg-gray-950">
+//         Failed to load Hero Slider Data!
+//       </div>
+//     );
+//   }
+
+//   return (
+//     <section className="relative w-full overflow-hidden bg-black p-0 m-0 group">
+      
+//       {/* Slide Index Counter */}
+//       <div className="absolute top-4 right-4 md:top-6 md:right-8 z-30 px-3.5 py-1 bg-black/60 backdrop-blur-md rounded-full text-xs md:text-sm font-bold text-white tracking-widest border border-white/20 shadow-lg">
+//         {currentIndex}/{services.length}
+//       </div>
+
+//       {/* Custom Left Nav Button */}
+//       <button 
+//         ref={prevRef}
+//         aria-label="Previous Slide"
+//         className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 bg-black/50 hover:bg-amber-500 hover:text-black text-white rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl border border-white/20 opacity-0 group-hover:opacity-100"
+//       >
+//         <LeftOutlined className="text-base md:text-lg" />
+//       </button>
+
+//       {/* Custom Right Nav Button */}
+//       <button 
+//         ref={nextRef}
+//         aria-label="Next Slide"
+//         className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 bg-black/50 hover:bg-amber-500 hover:text-black text-white rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl border border-white/20 opacity-0 group-hover:opacity-100"
+//       >
+//         <RightOutlined className="text-base md:text-lg" />
+//       </button>
+
+//       {/* Swiper Slider */}
+//       <Swiper
+//         modules={[Autoplay, Navigation]}
+//         speed={800}
+//         loop={services.length > 1}
+//         autoplay={{ 
+//           delay: 4500, 
+//           disableOnInteraction: false,
+//           pauseOnMouseEnter: true
+//         }}
+//         onSlideChange={(swiper) => {
+//           setCurrentIndex(swiper.realIndex + 1);
+//         }}
+//         onBeforeInit={(swiper) => {
+//           swiper.params.navigation.prevEl = prevRef.current;
+//           swiper.params.navigation.nextEl = nextRef.current;
+//         }}
+//         onInit={(swiper) => {
+//           swiper.navigation.init();
+//           swiper.navigation.update();
+//         }}
+//         className="w-full h-auto min-h-[300px]" 
+//       >
+//         {services.map((item, index) => (
+//           <SwiperSlide key={index} className="relative w-full p-0 m-0 overflow-hidden flex items-center justify-center">
+//             {({ isActive }) => (
+//               <div className="relative w-full h-full flex items-center justify-center bg-black">
+                
+//                 {/* 
+//                    Advanced Ultra-Sharp Upscaled Display Engine
+//                    - quality={100} & unoptimized: ImageBB এর ইমেজ রেজুলেশন নষ্ট হওয়া বন্ধ করবে
+//                    - contrast & brightness sharpening filter: ব্লার ভাব দূর করে ইমেজ HD শার্প করবে
+//                 */}
+//                 <Image 
+//                   src={item.headerimage} 
+//                   alt={item.category || "Header Banner"} 
+//                   width={2560}
+//                   height={1440}
+//                   priority={index === 0}
+//                   unoptimized={true} // ImageBB-এর মূল ফাইল সরাসরি রেন্ডার করবে
+//                   className="w-full h-auto max-h-[700px] object-cover block select-none transform-gpu transition-all duration-500"
+//                   style={{
+//                     filter: "contrast(108%) brightness(102%) saturate(105%)", // শার্পনেস এবং কন্ট্রাস্ট আপস্কেলিং
+//                     imageRendering: "-webkit-optimize-contrast", 
+//                     shapeRendering: "geometricPrecision",
+//                     backfaceVisibility: "hidden",
+//                     WebkitBackfaceVisibility: "hidden",
+//                     transform: "translateZ(0)"
+//                   }}
+//                 />
+
+//                 {/* Bottom Right Category Button */}
+//                 {isActive && (
+//                   <motion.div
+//                     initial={{ opacity: 0, y: 20 }}
+//                     animate={{ opacity: 1, y: 0 }}
+//                     transition={{ duration: 0.4, delay: 0.15 }}
+//                     className="absolute bottom-5 right-5 md:bottom-8 md:right-10 z-40"
+//                   >
+//                     <Link
+//                       href={`/category/${item.category}`}
+//                       className="relative inline-flex items-center justify-center p-[2px] overflow-hidden rounded-full font-bold group cursor-pointer shadow-[0_0_20px_rgba(245,158,11,0.5)] hover:shadow-[0_0_30px_rgba(245,158,11,0.8)] transition-all duration-300"
+//                     >
+//                       {/* Animated Glow Border */}
+//                       <span className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#0000_0%,#0000_50%,#f59e0b_70%,#fbbf24_100%)]"></span>
+
+//                       {/* Inner Button Content */}
+//                       <span className="relative px-6 py-2.5 md:px-8 md:py-3 bg-black/85 backdrop-blur-md text-white group-hover:bg-amber-500 group-hover:text-black rounded-full transition-all duration-300 text-xs md:text-sm font-black uppercase tracking-widest flex items-center gap-2 justify-center">
+//                         <span>{item.category}</span>
+//                         <span className="text-amber-500 group-hover:text-black transition-transform duration-300 group-hover:translate-x-1.5 text-base md:text-lg">
+//                           &rarr;
+//                         </span>
+//                       </span>
+//                     </Link>
+//                   </motion.div>
+//                 )}
+                
+//               </div>
+//             )}
+//           </SwiperSlide>
+//         ))}
+//       </Swiper>
+      
+//     </section>
+//   );
+// }
+
+
 "use client";
 import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Navigation } from "swiper/modules";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Spin } from "antd";
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 
-// Swiper CSS Styles
+// Swiper CSS
 import "swiper/css";
 import "swiper/css/navigation";
-import Image from "next/image";
+import "swiper/css/pagination";
 
-export default function Hero() {
+export default function FeaturedServiceBanner() {
   const [currentIndex, setCurrentIndex] = useState(1);
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
-  // API থেকে ডাটা লোড
-  const { data: services = [], isLoading, isError } = useQuery({
-    queryKey: ['hero-all-services'],
+  // API Query
+  const { data: slides = [], isLoading, isError } = useQuery({
+    queryKey: ["featured-slider-services"],
     queryFn: async () => {
       const res = await axios.get("https://arnab-backend.vercel.app/api/header");
       return res.data;
-    }
+    },
   });
 
   if (isLoading) {
     return (
-      <div className="h-[450px] w-full flex items-center justify-center bg-gray-950">
+      <div className="h-[500px] w-full flex items-center justify-center bg-[#18181b]">
         <Spin size="large" />
       </div>
     );
   }
 
-  if (isError || services.length === 0) {
-    return (
-      <div className="h-[450px] w-full flex items-center justify-center text-red-500 font-medium bg-gray-950">
-        Failed to load Hero Slider Data!
-      </div>
-    );
-  }
+  if (isError || !slides.length) return null;
 
   return (
-    <section className="relative w-full overflow-hidden bg-black p-0 m-0 group">
-      
-      {/* Slide Index Counter */}
-      <div className="absolute top-4 right-4 md:top-6 md:right-8 z-30 px-3.5 py-1 bg-black/60 backdrop-blur-md rounded-full text-xs md:text-sm font-bold text-white tracking-widest border border-white/20 shadow-lg">
-        {currentIndex}/{services.length}
+    <section className="relative w-full overflow-hidden bg-[#18181b] p-0 m-0 group">
+      {/* Top Right Counter Indicator */}
+      <div className="absolute top-3 right-3 md:top-5 md:right-6 z-30 px-3.5 py-1 bg-black/75 backdrop-blur-md rounded-md text-xs md:text-sm font-bold text-white tracking-widest border border-white/20 shadow-lg">
+        {currentIndex}/{slides.length}
       </div>
 
-      {/* Custom Left Nav Button */}
-      <button 
+      {/* Navigation Arrow - Left */}
+      <button
         ref={prevRef}
         aria-label="Previous Slide"
-        className="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 bg-black/50 hover:bg-amber-500 hover:text-black text-white rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl border border-white/20 opacity-0 group-hover:opacity-100"
+        className="absolute left-3 md:left-5 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 bg-white/80 hover:bg-white text-gray-900 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl backdrop-blur-sm opacity-0 group-hover:opacity-100"
       >
-        <LeftOutlined className="text-base md:text-lg" />
+        <LeftOutlined className="text-base" />
       </button>
 
-      {/* Custom Right Nav Button */}
-      <button 
+      {/* Navigation Arrow - Right */}
+      <button
         ref={nextRef}
         aria-label="Next Slide"
-        className="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 bg-black/50 hover:bg-amber-500 hover:text-black text-white rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl border border-white/20 opacity-0 group-hover:opacity-100"
+        className="absolute right-3 md:right-5 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 bg-white/30 hover:bg-white/50 text-white rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl backdrop-blur-sm opacity-0 group-hover:opacity-100"
       >
-        <RightOutlined className="text-base md:text-lg" />
+        <RightOutlined className="text-base" />
       </button>
 
       {/* Swiper Slider */}
       <Swiper
         modules={[Autoplay, Navigation]}
         speed={800}
-        loop={services.length > 1}
-        autoplay={{ 
-          delay: 4500, 
+        loop={slides.length > 1}
+        autoplay={{
+          delay: 5000,
           disableOnInteraction: false,
-          pauseOnMouseEnter: true
+          pauseOnMouseEnter: true,
         }}
+     
         onSlideChange={(swiper) => {
           setCurrentIndex(swiper.realIndex + 1);
         }}
@@ -333,68 +487,141 @@ export default function Hero() {
           swiper.navigation.init();
           swiper.navigation.update();
         }}
-        className="w-full h-auto min-h-[300px]" 
+        className="w-full h-full"
       >
-        {services.map((item, index) => (
-          <SwiperSlide key={index} className="relative w-full p-0 m-0 overflow-hidden flex items-center justify-center">
+        {slides.map((item, index) => (
+          <SwiperSlide key={index} className="w-full">
             {({ isActive }) => (
-              <div className="relative w-full h-full flex items-center justify-center bg-black">
+              /* Larger Banner Height added */
+              <div className="w-full h-auto min-h-[520px] sm:min-h-[580px] md:h-[580px] lg:h-[640px] bg-[#1a1a1c] flex flex-col md:flex-row items-stretch relative overflow-hidden pb-10 md:pb-0">
                 
-                {/* 
-                   Advanced Ultra-Sharp Upscaled Display Engine
-                   - quality={100} & unoptimized: ImageBB এর ইমেজ রেজুলেশন নষ্ট হওয়া বন্ধ করবে
-                   - contrast & brightness sharpening filter: ব্লার ভাব দূর করে ইমেজ HD শার্প করবে
-                */}
-                <Image 
-                  src={item.headerimage} 
-                  alt={item.category || "Header Banner"} 
-                  width={2560}
-                  height={1440}
-                  priority={index === 0}
-                  unoptimized={true} // ImageBB-এর মূল ফাইল সরাসরি রেন্ডার করবে
-                  className="w-full h-auto max-h-[700px] object-cover block select-none transform-gpu transition-all duration-500"
-                  style={{
-                    filter: "contrast(108%) brightness(102%) saturate(105%)", // শার্পনেস এবং কন্ট্রাস্ট আপস্কেলিং
-                    imageRendering: "-webkit-optimize-contrast", 
-                    shapeRendering: "geometricPrecision",
-                    backfaceVisibility: "hidden",
-                    WebkitBackfaceVisibility: "hidden",
-                    transform: "translateZ(0)"
-                  }}
-                />
+                {/* ================= LEFT SIDE: BEFORE / AFTER IMAGES ================= */}
+                <div className="w-full md:w-1/2 lg:w-7/12 relative grid grid-cols-2 h-[260px] sm:h-[360px] md:h-full overflow-hidden bg-black">
+                  
+                  {/* BEFORE IMAGE */}
+                  <div className="relative w-full h-full border-r border-black/40 overflow-hidden flex items-center justify-center bg-black">
+                    <img
+                      src={item.beforeImage || item.beforeImg}
+                      alt="Before"
+                      className="w-full h-full object-contain md:object-cover object-center select-none"
+                    />
+                    {/* Bottom Left Badge */}
+                    <span className="absolute bottom-3 left-3 z-10 bg-black/70 backdrop-blur-md text-white/90 text-[10px] md:text-xs font-bold uppercase px-2.5 py-1 rounded tracking-wider border border-white/10 shadow-md">
+                      BEFORE
+                    </span>
+                  </div>
 
-                {/* Bottom Right Category Button */}
-                {isActive && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.15 }}
-                    className="absolute bottom-5 right-5 md:bottom-8 md:right-10 z-40"
-                  >
-                    <Link
-                      href={`/category/${item.category}`}
-                      className="relative inline-flex items-center justify-center p-[2px] overflow-hidden rounded-full font-bold group cursor-pointer shadow-[0_0_20px_rgba(245,158,11,0.5)] hover:shadow-[0_0_30px_rgba(245,158,11,0.8)] transition-all duration-300"
-                    >
-                      {/* Animated Glow Border */}
-                      <span className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#0000_0%,#0000_50%,#f59e0b_70%,#fbbf24_100%)]"></span>
+                  {/* AFTER IMAGE */}
+                  <div className="relative w-full h-full overflow-hidden flex items-center justify-center bg-black">
+                    <img
+                      src={item.afterImage || item.afterImg}
+                      alt="After"
+                      className="w-full h-full object-contain md:object-cover object-center select-none"
+                    />
+                    {/* Bottom Right Badge */}
+                    <span className="absolute bottom-3 right-3 z-10 bg-black/70 backdrop-blur-md text-white/90 text-[10px] md:text-xs font-bold uppercase px-2.5 py-1 rounded tracking-wider border border-white/10 shadow-md">
+                      AFTER
+                    </span>
+                  </div>
 
-                      {/* Inner Button Content */}
-                      <span className="relative px-6 py-2.5 md:px-8 md:py-3 bg-black/85 backdrop-blur-md text-white group-hover:bg-amber-500 group-hover:text-black rounded-full transition-all duration-300 text-xs md:text-sm font-black uppercase tracking-widest flex items-center gap-2 justify-center">
-                        <span>{item.category}</span>
-                        <span className="text-amber-500 group-hover:text-black transition-transform duration-300 group-hover:translate-x-1.5 text-base md:text-lg">
-                          &rarr;
-                        </span>
-                      </span>
-                    </Link>
-                  </motion.div>
-                )}
-                
+                </div>
+
+                {/* ================= RIGHT SIDE: TEXT GRID & SHADOW SECTION ================= */}
+<div className="w-full md:w-1/2 lg:w-5/12 relative bg-[#1a1a1c] p-6 md:p-10 lg:p-14 flex flex-col justify-center items-center md:items-start text-center md:text-left z-10 my-auto">
+  
+  {/* INNER GRADIENT SHADOW */}
+  <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-[#1a1a1c] to-[#1a1a1c] pointer-events-none z-0" />
+
+  {/* Top Badge: isFeatured (যদি API তে true থাকে) */}
+  {item?.isFeatured && (
+    <span className="z-10 mb-3 px-3 py-1 bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-widest">
+      Featured
+    </span>
+  )}
+
+  {/* Category Title */}
+  {(item?.categoryTitle || item?.title) && (
+    <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-white uppercase tracking-wider leading-tight mb-3 md:mb-4 z-10">
+      {item.categoryTitle || item.title}
+    </h2>
+  )}
+
+  {/* Price Text */}
+  {item?.priceText && (
+    <p className="text-xs sm:text-sm md:text-base font-semibold text-amber-400 uppercase tracking-widest mb-3 z-10">
+      {item.priceText}
+    </p>
+  )}
+
+  {/* Description (যদি থাকে) */}
+  {item?.description && (
+    <p className="text-xs sm:text-sm text-gray-300 mb-4 line-clamp-3 z-10">
+      {item.description}
+    </p>
+  )}
+
+  {/* Features List (Array তে Data থাকলে লিস্ট হিসেবে দেখাবে) */}
+  {Array.isArray(item?.features) && item.features.length > 0 && (
+    <ul className="text-xs md:text-sm text-gray-400 space-y-1 mb-6 text-left z-10">
+      {item.features.map((feature, idx) => (
+        <li key={idx} className="flex items-center gap-2">
+          <span className="text-amber-500">✓</span> {feature}
+        </li>
+      ))}
+    </ul>
+  )}
+
+  {/* View More Button */}
+  {isActive && item?.category && (
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: 0.15 }}
+      className="z-10 mb-4 md:mb-0"
+    >
+      <Link
+        href={`/category/${item.category}`}
+        className="relative inline-flex items-center justify-center p-[2px] overflow-hidden rounded-full font-bold group cursor-pointer shadow-[0_0_20px_rgba(245,158,11,0.3)] hover:shadow-[0_0_25px_rgba(245,158,11,0.7)] transition-all duration-300"
+      >
+        <span className="absolute inset-[-1000%] animate-[spin_4s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#0000_0%,#0000_50%,#f59e0b_70%,#fbbf24_100%)]" />
+        <span className="relative px-6 py-2.5 md:px-8 md:py-3.5 bg-black/85 backdrop-blur-md text-white group-hover:bg-amber-500 group-hover:text-black rounded-full transition-all duration-300 text-xs md:text-sm font-black uppercase tracking-widest flex items-center gap-2 justify-center">
+          <span>View Details</span>
+          <span className="text-amber-500 group-hover:text-black transition-transform duration-300 group-hover:translate-x-1.5 text-base md:text-lg">
+            &rarr;
+          </span>
+        </span>
+      </Link>
+    </motion.div>
+  )}
+</div>
+
               </div>
             )}
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* CENTERED PAGINATION DOTS (Positioned strictly at bottom) */}
       
+
+      {/* Swiper Pagination Styling */}
+      <style jsx global>{`
+        .custom-swiper-pagination .swiper-pagination-bullet {
+          width: 8px;
+          height: 8px;
+          background: rgba(255, 255, 255, 0.4);
+          opacity: 1;
+          transition: all 0.3s ease;
+          border-radius: 9999px;
+          cursor: pointer;
+        }
+        .custom-swiper-pagination .swiper-pagination-bullet-active {
+          background: #ffffff;
+          width: 10px;
+          height: 10px;
+          transform: scale(1.15);
+        }
+      `}</style>
     </section>
   );
 }

@@ -90,23 +90,91 @@ export default function ServicesSection() {
 }
 
 // Pure Tailwind Diff Effect Component
+// Pure Tailwind Diff Effect Component
+// function PureDiffSlider({ beforeImg, afterImg }) {
+//   const [position, setPosition] = useState(50);
+
+//   return (
+//     // aspect-4/3 পরিবর্তন করে aspect-[3/4] এবং bg-gray-100 দেওয়া হয়েছে
+//     <div className="relative w-full aspect-[3/4] max-h-[500px] bg-gray-100 rounded-2xl overflow-hidden border border-gray-200 shadow-md select-none group">
+      
+//       {/* 1. After Image (Background) */}
+//       <img
+//         src={afterImg}
+//         alt="After"
+//         // object-cover এর সাথে object-top যোগ করা হয়েছে যেন মাথার অংশ বজায় থাকে
+//         className="absolute inset-0 w-full h-full object-cover object-top pointer-events-none"
+//       />
+//       <span className="absolute bottom-4 right-4 bg-amber-500 text-black text-xs font-bold px-3 py-1 rounded shadow-md z-10 uppercase">
+//         After
+//       </span>
+
+//       {/* 2. Before Image (Clip Path View) */}
+//       <div
+//         className="absolute inset-0 overflow-hidden pointer-events-none z-10"
+//         style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
+//       >
+//         <img
+//           src={beforeImg}
+//           alt="Before"
+//           // object-cover এর সাথে object-top যোগ করা হয়েছে
+//           className="absolute inset-0 w-full h-full object-cover object-top"
+//         />
+//         <span className="absolute bottom-4 left-4 bg-black/70 text-white text-xs font-bold px-3 py-1 rounded shadow-md z-10 uppercase">
+//           Before
+//         </span>
+//       </div>
+
+//       {/* 3. Drag Line Divider */}
+//       <div
+//         className="absolute top-0 bottom-0 w-1 bg-white shadow-[0_0_10px_rgba(0,0,0,0.5)] z-20 pointer-events-none"
+//         style={{ left: `${position}%` }}
+//       >
+//         <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 bg-white text-gray-800 rounded-full flex items-center justify-center shadow-lg border border-gray-200 text-xs font-bold">
+//           ⇄
+//         </div>
+//       </div>
+
+//       {/* 4. Interactive Range Input Layer */}
+//       <input
+//         type="range"
+//         min="0"
+//         max="100"
+//         value={position}
+//         onChange={(e) => setPosition(Number(e.target.value))}
+//         className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-30"
+//       />
+
+//     </div>
+//   );
+// }
+
+// Pure Tailwind Diff Effect Component (Dynamic Auto-Height Fix)
 function PureDiffSlider({ beforeImg, afterImg }) {
   const [position, setPosition] = useState(50);
 
   return (
-    <div className="relative w-full aspect-4/3 rounded-2xl overflow-hidden border border-gray-200 shadow-md select-none group">
+    // Dynamic aspect-ratio and natural sizing: wrapper height adjusts to the content
+    <div className="relative w-full rounded-2xl overflow-hidden border border-gray-200 shadow-md select-none group">
       
-      {/* 1. After Image (Background) */}
+      {/* 1. Base Hidden Image to auto-calculate container height dynamically */}
+      <img
+        src={afterImg}
+        alt="Aspect Ratio Reference"
+        className="w-full h-auto block opacity-0 pointer-events-none"
+      />
+
+      {/* 2. After Image (Background Fill) */}
       <img
         src={afterImg}
         alt="After"
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        className="absolute inset-0 w-full h-full object-fill pointer-events-none"
       />
       <span className="absolute bottom-4 right-4 bg-amber-500 text-black text-xs font-bold px-3 py-1 rounded shadow-md z-10 uppercase">
         After
       </span>
 
-      {/* 2. Before Image (Clip Path View - Image pixel stays fixed) */}
+      {/* 3. Before Image (Clip Path View) */}
       <div
         className="absolute inset-0 overflow-hidden pointer-events-none z-10"
         style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}
@@ -114,14 +182,14 @@ function PureDiffSlider({ beforeImg, afterImg }) {
         <img
           src={beforeImg}
           alt="Before"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-fill"
         />
         <span className="absolute bottom-4 left-4 bg-black/70 text-white text-xs font-bold px-3 py-1 rounded shadow-md z-10 uppercase">
           Before
         </span>
       </div>
 
-      {/* 3. Drag Line Divider */}
+      {/* 4. Drag Line Divider */}
       <div
         className="absolute top-0 bottom-0 w-1 bg-white shadow-[0_0_10px_rgba(0,0,0,0.5)] z-20 pointer-events-none"
         style={{ left: `${position}%` }}
@@ -131,7 +199,7 @@ function PureDiffSlider({ beforeImg, afterImg }) {
         </div>
       </div>
 
-      {/* 4. Interactive Range Input Layer */}
+      {/* 5. Interactive Range Input Layer */}
       <input
         type="range"
         min="0"
