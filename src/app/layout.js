@@ -101,9 +101,9 @@ export const metadata = {
     apple: "/images/logos/newlogo (2).jpg",
   },
 
-  verification: {
-    google: "YOUR_GOOGLE_SEARCH_CONSOLE_CODE",
-  },
+verification: {
+  google: "JNzL9GGcVt8I6wMyD4IY1iSWhpE3HrB-e_0Ubeyvv-k",
+},
 };
 
 export default function RootLayout({ children }) {
